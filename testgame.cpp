@@ -11,5 +11,6 @@ int main(int argc, char *argv[]) {
         cmd += *(argv++);
     }
     system(cmd.c_str());
+printf("foo");
     return 0;
 }
