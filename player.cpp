@@ -76,12 +76,18 @@ Move *Player::getBestMove(std::vector<Move *> possibleMoves)
 {
     int numPossibleMoves = possibleMoves.size();
     int * moveScores = (int *)malloc(numPossibleMoves * sizeof(int));
+    int max = -5;
+    int maxIndex;
     for(int i = 0; i < numPossibleMoves; i++)
     {
         moveScores[i] = getLocScore(possibleMoves[i]);
+        if(moveScores[i] > max)
+        {
+            maxIndex = i;
+        }
     }
 
-    Move * bestMove = possibleMoves[*std::max_element(moveScores, moveScores + numPossibleMoves)];
+    Move * bestMove = possibleMoves[maxIndex];
     std::free(moveScores);
 
     return bestMove;

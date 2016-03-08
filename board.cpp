@@ -30,7 +30,6 @@ Board::Board() {
             counter1++;
         }
     }
-
     boardFile.close();  
     std::cerr << "Done initializing board" << std::endl;
 }
