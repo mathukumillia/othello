@@ -97,7 +97,6 @@ int Player::getLocScore(Move * move)
 {
     int x = move->getX();
     int y = move->getY();
-    std::cerr << board->boardScores[x][y];
     return board->boardScores[x][y];
 }
 
