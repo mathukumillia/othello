@@ -1,11 +1,10 @@
 #include "board.h"
 #include <fstream>
 #include <string>
-<<<<<<< HEAD
+
 #include <sstream>
-=======
+
 #include <iostream>
->>>>>>> df2957d4fd8d2f7fe7a2b96cf6c4fddab0b5d8a5
 #include <stdlib.h>
 
 /*
@@ -31,20 +30,19 @@ Board::Board() {
         counter2++;
         if(counter2 > 7)
         {
-<<<<<<< HEAD
+
 			
             boardScores[counter][i] = atoi(line[i].c_str());
             std::cerr << (boardScores[counter][i]) << " ";
         }
         std::cerr << std::endl;
         counter++;
-=======
+
             counter2 = 0;
             counter1++;
         }
->>>>>>> df2957d4fd8d2f7fe7a2b96cf6c4fddab0b5d8a5
-    }
 
+    }
     boardFile.close();  
     std::cerr << "Done initializing board" << std::endl;
 }

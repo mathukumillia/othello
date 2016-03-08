@@ -23,7 +23,7 @@ public:
     
     Move *doMove(Move *opponentsMove, int msLeft);
     Move *getBestMove(std::vector<Move *> possibleMoves);
-    Move *Player::minimax(std::vector<Move *> possibleMoves)
+    Move *minimax(std::vector<Move *> possibleMoves);
     bool isCornerMove(Move * move);
     bool isAdjacentToCorner(Move * move);
     bool isOnEdge(Move * move);

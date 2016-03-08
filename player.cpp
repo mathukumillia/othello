@@ -74,27 +74,32 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 */
 Move *Player::minimax(std::vector<Move *> possibleMoves)
 {
-	Player opponent = new Player(opponentSide);
+	Player * opponent = new Player(opponentSide);
     int numPossibleMoves = possibleMoves.size();
     int * moveScores = (int *)malloc(numPossibleMoves * sizeof(int));
     
     
     for(int i = 0; i < numPossibleMoves; i++)
     {
-        Board * foo = board.copy();
-        foo->doMove(possibleMoves[i]);
-        std::vector<Move *> possibleMoves;
+        Board * foo = board->copy();
+        foo->doMove(possibleMoves[i], playerSide);
+        
+        std::vector<Move *> possiblemoves;
         
 		for(int i = 0; i < 8; i++)
 		{
 			for(int j = 0; j < 8; j++)
 			{
 				Move * current = new Move(i,j);
-				if(board->checkMove(current, playerSide))
+				if(foo->checkMove(current, opponentSide))
 				{
-					possibleMoves.push_back(current);
+					possiblemoves.push_back(current);
 				}
 			}
+		}
+		
+		for(unsigned int f = 0; f < possiblemoves.size(); f++){
+			
 		}
 		
     }
@@ -116,12 +121,18 @@ Move *Player::getBestMove(std::vector<Move *> possibleMoves)
 {
     int numPossibleMoves = possibleMoves.size();
     int * moveScores = (int *)malloc(numPossibleMoves * sizeof(int));
+    int max = -5;
+    int maxIndex;
     for(int i = 0; i < numPossibleMoves; i++)
     {
         moveScores[i] = getLocScore(possibleMoves[i]);
+        if(moveScores[i] > max)
+        {
+            maxIndex = i;
+        }
     }
 
-    Move * bestMove = possibleMoves[*std::max_element(moveScores, moveScores + numPossibleMoves)];
+    Move * bestMove = possibleMoves[maxIndex];
     std::free(moveScores);
 
     return bestMove;
