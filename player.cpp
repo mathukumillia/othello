@@ -61,6 +61,20 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
         }
     }
 
+    Move * chosenMove = getBestMove(possibleMoves);
+    board->doMove(chosenMove, playerSide);
+    return chosenMove;
+}
+
+/*
+* @brief returns the best move heuristically out of a selection of moves
+*
+* @param possibleMoves - a list of possible moves
+*
+*/
+Move *Player::getBestMove(std::vector<Move *> possibleMoves)
+{
     int numPossibleMoves = possibleMoves.size();
+    
     return possibleMoves[rand() % numPossibleMoves];
 }
