@@ -76,6 +76,7 @@ Move *Player::minimax(std::vector<Move *> possibleMoves)
 {
 	Player * opponent = new Player(opponentSide);
     int numPossibleMoves = possibleMoves.size();
+    int minscore;
     int * moveScores = (int *)malloc(numPossibleMoves * sizeof(int));
     
     
@@ -99,6 +100,9 @@ Move *Player::minimax(std::vector<Move *> possibleMoves)
 		}
 		
 		for(unsigned int f = 0; f < possiblemoves.size(); f++){
+			Board * goo = foo->copy();
+			goo->doMove(possiblemoves[f], opponentSide);
+			
 			
 		}
 		

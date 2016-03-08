@@ -2,9 +2,9 @@
 #include <fstream>
 #include <string>
 
-#include <sstream>
 
 #include <iostream>
+
 #include <stdlib.h>
 
 /*
@@ -30,14 +30,6 @@ Board::Board() {
         counter2++;
         if(counter2 > 7)
         {
-
-			
-            boardScores[counter][i] = atoi(line[i].c_str());
-            std::cerr << (boardScores[counter][i]) << " ";
-        }
-        std::cerr << std::endl;
-        counter++;
-
             counter2 = 0;
             counter1++;
         }
