@@ -23,9 +23,6 @@ public:
     
     Move *doMove(Move *opponentsMove, int msLeft);
     Move *getBestMove(std::vector<Move *> possibleMoves);
-    bool isCornerMove(Move * move);
-    bool isAdjacentToCorner(Move * move);
-    bool isOnEdge(Move * move);
     int getLocScore(Move * move);
 
     // Flag to tell if the player is running within the test_minimax context
