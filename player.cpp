@@ -74,24 +74,24 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 */
 Move *Player::minimax(std::vector<Move *> possibleMoves)
 {
-	Player * opponent = new Player(opponentSide);
     int numPossibleMoves = possibleMoves.size();
-    int minscore;
+    int minimaxscore;
     int * moveScores = (int *)malloc(numPossibleMoves * sizeof(int));
-    
+    Move * bestMove;
     
     for(int i = 0; i < numPossibleMoves; i++)
     {
+		int flum;
         Board * foo = board->copy();
         foo->doMove(possibleMoves[i], playerSide);
         
         std::vector<Move *> possiblemoves;
         
-		for(int i = 0; i < 8; i++)
+		for(int p = 0;p < 8; i++)
 		{
 			for(int j = 0; j < 8; j++)
 			{
-				Move * current = new Move(i,j);
+				Move * current = new Move(p,j);
 				if(foo->checkMove(current, opponentSide))
 				{
 					possiblemoves.push_back(current);
@@ -103,12 +103,34 @@ Move *Player::minimax(std::vector<Move *> possibleMoves)
 			Board * goo = foo->copy();
 			goo->doMove(possiblemoves[f], opponentSide);
 			
+			std::vector<Move *> possiblemuves;
+        
+			for(int p = 0;p < 8; i++)
+			{
+				for(int j = 0; j < 8; j++)
+				{
+					Move * current = new Move(p,j);
+					if(goo->checkMove(current, playerSide))
+					{
+						possiblemuves.push_back(current);
+					}
+				}
+			}
 			
+			for(unsigned int m = 0; m < possiblemuves.size(); m++){
+				Board * moo = goo->copy();
+				moo->doMove(possiblemuves[m], playerSide);
+				
+				int gum = moo->count(playerSide);
+				flum = min(flum, gum);
+			}
 		}
-		
+		if ( flum > minimaxscore ){
+			minimaxscore = flum;
+			bestMove = possibleMoves[i];
+		}
     }
 
-    Move * bestMove = possibleMoves[*std::max_element(moveScores, moveScores + numPossibleMoves)];
     std::free(moveScores);
 
     return bestMove;
