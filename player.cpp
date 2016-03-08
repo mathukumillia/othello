@@ -67,6 +67,51 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 }
 
 /*
+* @brief returns the best move minimax out of a selection of moves
+*
+* @param returns best move
+*
+*/
+Move *Player::minimax(std::vector<Move *> possibleMoves)
+{
+	Player * opponent = new Player(opponentSide);
+    int numPossibleMoves = possibleMoves.size();
+    int * moveScores = (int *)malloc(numPossibleMoves * sizeof(int));
+    
+    
+    for(int i = 0; i < numPossibleMoves; i++)
+    {
+        Board * foo = board->copy();
+        foo->doMove(possibleMoves[i], playerSide);
+        
+        std::vector<Move *> possiblemoves;
+        
+		for(int i = 0; i < 8; i++)
+		{
+			for(int j = 0; j < 8; j++)
+			{
+				Move * current = new Move(i,j);
+				if(foo->checkMove(current, opponentSide))
+				{
+					possiblemoves.push_back(current);
+				}
+			}
+		}
+		
+		for(unsigned int f = 0; f < possiblemoves.size(); f++){
+			
+		}
+		
+    }
+
+    Move * bestMove = possibleMoves[*std::max_element(moveScores, moveScores + numPossibleMoves)];
+    std::free(moveScores);
+
+    return bestMove;
+}
+
+
+/*
 * @brief returns the best move heuristically out of a selection of moves
 *
 * @param possibleMoves - a list of possible moves
