@@ -1,5 +1,8 @@
 #include "board.h"
-
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <stdlib.h>
 /*
  * Make a standard 8x8 othello board and initialize it to the standard setup.
  */
@@ -11,7 +14,19 @@ Board::Board() {
     black.set(4 + 8 * 3);
     black.set(3 + 8 * 4);
 
-    
+    string line;
+    int counter = 0;
+    ifstream boardFile("boardScores.txt");
+    while(getline(boardFile, line))
+    {
+        for(int i = 0; i < 8; i++)
+        {
+            boardScores[counter][i] = stoi(line[i]);
+        }
+        counter++;
+    }
+    boardFile.close();  
+
 }
 
 /*
