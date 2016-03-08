@@ -2,7 +2,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 #include <stdlib.h>
+
 /*
  * Make a standard 8x8 othello board and initialize it to the standard setup.
  */
@@ -21,8 +23,11 @@ Board::Board() {
     {
         for(int i = 0; i < 8; i++)
         {
-            boardScores[counter][i] = stoi(line[i]);
+			
+            boardScores[counter][i] = atoi(line[i].c_str());
+            std::cerr << (boardScores[counter][i]) << " ";
         }
+        std::cerr << std::endl;
         counter++;
     }
     boardFile.close();  
