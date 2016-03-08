@@ -35,7 +35,6 @@ Board::Board() {
 
     }
     boardFile.close();  
-    std::cerr << "Done initializing board" << std::endl;
 }
 
 /*
@@ -203,4 +202,28 @@ void Board::setBoard(char data[]) {
             taken.set(i);
         }
     }
+}
+
+/*
+* @brief gets the heuristic score of the board
+*
+*/
+int Board::getBoardScore(Side player, Side opponent)
+{
+    int score = 0;
+    for(int i = 0; i < 8; i++)
+    {
+        for(int j = 0; j < 8; j++)
+        {
+            if(get(player,i,j))
+            {
+                score += boardScores[i][j];
+            }
+            else if(get(opponent,i,j))
+            {
+                score -= boardScores[i][j];
+            }
+        }
+    }
+    return score;
 }

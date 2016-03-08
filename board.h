@@ -30,6 +30,7 @@ public:
     int countWhite();
 
     void setBoard(char data[]);
+    int getBoardScore(Side player, Side opponent);
 };
 
 #endif

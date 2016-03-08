@@ -150,8 +150,10 @@ Move *Player::getBestMove(std::vector<Move *> possibleMoves)
 */
 int Player::getLocScore(Move * move)
 {
-    int x = move->getX();
-    int y = move->getY();
-    return board->boardScores[x][y];
+    Board * newBoard = board->copy();
+    newBoard->doMove(move, playerSide);
+    int score = newBoard->getBoardScore(playerSide, opponentSide);
+
+    return score;
 }
 
