@@ -1,8 +1,11 @@
 #include "board.h"
-#include <iostream>
 #include <fstream>
 #include <string>
+<<<<<<< HEAD
 #include <sstream>
+=======
+#include <iostream>
+>>>>>>> df2957d4fd8d2f7fe7a2b96cf6c4fddab0b5d8a5
 #include <stdlib.h>
 
 /*
@@ -17,21 +20,33 @@ Board::Board() {
     black.set(3 + 8 * 4);
 
     string line;
-    int counter = 0;
+    int counter1 = 0;
+    int counter2 = 0;
     ifstream boardFile("boardScores.txt");
-    while(getline(boardFile, line))
+    int a;
+    while(boardFile >> a)
     {
-        for(int i = 0; i < 8; i++)
+        
+        boardScores[counter1][counter2] = a;
+        counter2++;
+        if(counter2 > 7)
         {
+<<<<<<< HEAD
 			
             boardScores[counter][i] = atoi(line[i].c_str());
             std::cerr << (boardScores[counter][i]) << " ";
         }
         std::cerr << std::endl;
         counter++;
+=======
+            counter2 = 0;
+            counter1++;
+        }
+>>>>>>> df2957d4fd8d2f7fe7a2b96cf6c4fddab0b5d8a5
     }
-    boardFile.close();  
 
+    boardFile.close();  
+    std::cerr << "Done initializing board" << std::endl;
 }
 
 /*

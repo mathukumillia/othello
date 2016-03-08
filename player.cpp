@@ -67,18 +67,36 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 }
 
 /*
-* @brief returns the best move heuristically out of a selection of moves
+* @brief returns the best move minimax out of a selection of moves
 *
-* @param possibleMoves - a list of possible moves
+* @param returns best move
 *
 */
 Move *Player::minimax(std::vector<Move *> possibleMoves)
 {
+	Player opponent = new Player(opponentSide);
     int numPossibleMoves = possibleMoves.size();
     int * moveScores = (int *)malloc(numPossibleMoves * sizeof(int));
+    
+    
     for(int i = 0; i < numPossibleMoves; i++)
     {
-        moveScores[i] = getLocScore(possibleMoves[i]);
+        Board * foo = board.copy();
+        foo->doMove(possibleMoves[i]);
+        std::vector<Move *> possibleMoves;
+        
+		for(int i = 0; i < 8; i++)
+		{
+			for(int j = 0; j < 8; j++)
+			{
+				Move * current = new Move(i,j);
+				if(board->checkMove(current, playerSide))
+				{
+					possibleMoves.push_back(current);
+				}
+			}
+		}
+		
     }
 
     Move * bestMove = possibleMoves[*std::max_element(moveScores, moveScores + numPossibleMoves)];
@@ -119,7 +137,6 @@ int Player::getLocScore(Move * move)
 {
     int x = move->getX();
     int y = move->getY();
-    std::cerr << board->boardScores[x][y];
     return board->boardScores[x][y];
 }
 
