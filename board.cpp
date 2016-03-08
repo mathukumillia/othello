@@ -25,19 +25,10 @@ Board::Board() {
     int a;
     while(boardFile >> a)
     {
-        
         boardScores[counter1][counter2] = a;
         counter2++;
         if(counter2 > 7)
         {
-
-			
-            boardScores[counter][i] = atoi(line[i].c_str());
-            std::cerr << (boardScores[counter][i]) << " ";
-        }
-        std::cerr << std::endl;
-        counter++;
-
             counter2 = 0;
             counter1++;
         }
