@@ -75,6 +75,29 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 Move *Player::getBestMove(std::vector<Move *> possibleMoves)
 {
     int numPossibleMoves = possibleMoves.size();
-    
-    return possibleMoves[rand() % numPossibleMoves];
+    int * moveScores = (int *)malloc(numPossibleMoves * sizeof(int));
+    for(int i = 0; i < numPossibleMoves; i++)
+    {
+        moveScores[i] = getLocScore(possibleMoves[i]);
+    }
+
+    Move * bestMove = possibleMoves[*std::max_element(moveScores, moveScores + numPossibleMoves)];
+    std::free(moveScores);
+
+    return bestMove;
 }
+
+/*
+* @brief given a move, finds its heuristic score
+*
+* @param move - the move you want to get the score of
+*
+*/
+int Player::getLocScore(Move * move)
+{
+    int x = move->getX();
+    int y = move->getY();
+
+    return board->boardScores[x][y];
+}
+
