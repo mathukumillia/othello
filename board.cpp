@@ -25,7 +25,6 @@ Board::Board() {
     int a;
     while(boardFile >> a)
     {
-        
         boardScores[counter1][counter2] = a;
         counter2++;
         if(counter2 > 7)
