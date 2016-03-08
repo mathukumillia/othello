@@ -4,9 +4,17 @@
 #include <iostream>
 #include "common.h"
 #include "board.h"
+#include <cstdlib>
+#include <vector>
+
 using namespace std;
 
 class Player {
+
+private:
+	Board *board;
+	Side playerSide;
+	Side opponentSide;
 
 public:
     Player(Side side);

@@ -1,6 +1,5 @@
 #include "player.h"
 
-// partner 1 edit has been made
 /*
  * Constructor for the player; initialize everything here. The side your AI is
  * on (BLACK or WHITE) is passed in as "side". The constructor must finish 
@@ -9,18 +8,23 @@
 Player::Player(Side side) {
     // Will be set to true in test_minimax.cpp.
     testingMinimax = false;
-
-    /* 
-     * TODO: Do any initialization you need to do here (setting up the board,
-     * precalculating things, etc.) However, remember that you will only have
-     * 30 seconds.
-     */
+    playerSide = side;
+    if(playerSide == WHITE)
+    {
+        opponentSide = BLACK;
+    }
+    else
+    {
+        opponentSide = WHITE;
+    }
+    board = new Board();
 }
 
 /*
  * Destructor for the player.
  */
 Player::~Player() {
+    delete board;
 }
 
 /*
@@ -36,9 +40,27 @@ Player::~Player() {
  * return NULL.
  */
 Move *Player::doMove(Move *opponentsMove, int msLeft) {
-    /* 
-     * TODO: Implement how moves your AI should play here. You should first
-     * process the opponent's opponents move before calculating your own move
-     */ 
-    return NULL;
+    
+    board->doMove(opponentsMove, opponentSide);
+
+    if(!board->hasMoves(playerSide))
+    {
+        return NULL;
+    }
+
+    std::vector<Move *> possibleMoves;
+    for(int i = 0; i < 8; i++)
+    {
+        for(int j = 0; j < 8; j++)
+        {
+            Move * current = new Move(i,j);
+            if(board->checkMove(current, playerSide))
+            {
+                possibleMoves.push_back(current);
+            }
+        }
+    }
+
+    int numPossibleMoves = possibleMoves.size();
+    return possibleMoves[rand() % numPossibleMoves];
 }
