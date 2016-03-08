@@ -60,8 +60,12 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
             }
         }
     }
-
-    Move * chosenMove = getBestMove(possibleMoves);
+    Move * chosenMove;
+	if (testingMinimax == true){
+		chosenMove = minimax(possibleMoves);
+	}else{
+		chosenMove = getBestMove(possibleMoves);
+	}
     board->doMove(chosenMove, playerSide);
     return chosenMove;
 }
