@@ -159,6 +159,7 @@ Move *Player::getBestMove(std::vector<Move *> possibleMoves)
         if(moveScores[i] > max)
         {
             maxIndex = i;
+            max = moveScores[i];
         }
     }
 
