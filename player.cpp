@@ -27,6 +27,17 @@ Player::~Player() {
     delete board;
 }
 
+/**
+*
+* @brief sets the player's board to the given board
+*
+* @param board - the board we want to set as the current board
+**/
+void Player::setBoard(Board * b)
+{
+    board = b;
+}
+
 /*
  * Compute the next move given the opponent's last move. Your AI is
  * expected to keep track of the board on its own. If this is the first move,
@@ -79,62 +90,57 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 Move *Player::minimax(std::vector<Move *> possibleMoves)
 {
     int numPossibleMoves = possibleMoves.size();
-    int minimaxscore;
+    int minimaxScore = -500;
     int * moveScores = (int *)malloc(numPossibleMoves * sizeof(int));
     Move * bestMove;
     
     for(int i = 0; i < numPossibleMoves; i++)
     {
-		int flum;
-        Board * foo = board->copy();
-        foo->doMove(possibleMoves[i], playerSide);
+        Board * firstGen = board->copy();
+        firstGen->doMove(possibleMoves[i], playerSide);
         
-        std::vector<Move *> possiblemoves;
+        std::vector<Move *> possibleMoves2;
         
-		for(int p = 0;p < 8; i++)
+        // get possible moves after the first player side move
+		for(int x = 0;x < 8; x++)
 		{
-			for(int j = 0; j < 8; j++)
+			for(int y = 0; y < 8; y++)
 			{
-				Move * current = new Move(p,j);
-				if(foo->checkMove(current, opponentSide))
+				Move * current = new Move(x,y);
+				if(firstGen->checkMove(current, opponentSide))
 				{
-					possiblemoves.push_back(current);
+					possibleMoves2.push_back(current);
 				}
 			}
 		}
 		
-		for(unsigned int f = 0; f < possiblemoves.size(); f++){
-			Board * goo = foo->copy();
-			goo->doMove(possiblemoves[f], opponentSide);
+        // make a second level move and calculate the minimum board score that could result
+        int minSecondGenScore = 100;
+		for(unsigned int f = 0; f < possibleMoves2.size(); f++){
+			Board * secondGen = firstGen->copy();
+			secondGen->doMove(possibleMoves2[f], opponentSide);
 			
-			std::vector<Move *> possiblemuves;
-        
-			for(int p = 0;p < 8; i++)
-			{
-				for(int j = 0; j < 8; j++)
-				{
-					Move * current = new Move(p,j);
-					if(goo->checkMove(current, playerSide))
-					{
-						possiblemuves.push_back(current);
-					}
-				}
-			}
-			
-			for(unsigned int m = 0; m < possiblemuves.size(); m++){
-				Board * moo = goo->copy();
-				moo->doMove(possiblemuves[m], playerSide);
-				
-				int gum = moo->count(playerSide);
-				flum = min(flum, gum);
-			}
+            int score = secondGen->count(playerSide) - secondGen->count(opponentSide);      
+			if(score < minSecondGenScore)
+            {
+                minSecondGenScore = score;
+            }
 		}
-		if ( flum > minimaxscore ){
-			minimaxscore = flum;
-			bestMove = possibleMoves[i];
-		}
+        moveScores[i] = minSecondGenScore;	
     }
 
+    // getting minimax score and the corresponding best move
+    int minimaxIndex;
+    for(int i = 0; i < numPossibleMoves; i++)
+    {
+        if(moveScores[i] >= minimaxScore)
+        {
+            minimaxScore = moveScores[i];
+            minimaxIndex = i;
+        }
+    }
+
+    bestMove = possibleMoves[minimaxIndex];
     std::free(moveScores);
 
     return bestMove;
