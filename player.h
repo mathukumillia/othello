@@ -25,6 +25,7 @@ public:
     Move *getBestMove(std::vector<Move *> possibleMoves);
     Move *minimax(std::vector<Move *> possibleMoves);
     int getLocScore(Move * move);
+    int getLocScore(Move * move, Board * customBoard);
     void setBoard(Board * b);
 
     // Flag to tell if the player is running within the test_minimax context

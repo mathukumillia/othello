@@ -116,11 +116,8 @@ Move *Player::minimax(std::vector<Move *> possibleMoves)
 		
         // make a second level move and calculate the minimum board score that could result
         int minSecondGenScore = 100;
-		for(unsigned int f = 0; f < possibleMoves2.size(); f++){
-			Board * secondGen = firstGen->copy();
-			secondGen->doMove(possibleMoves2[f], opponentSide);
-			
-            int score = secondGen->count(playerSide) - secondGen->count(opponentSide);      
+		for(unsigned int f = 0; f < possibleMoves2.size(); f++){			 
+            int score = getLocScore(possibleMoves2[f], firstGen);    
 			if(score < minSecondGenScore)
             {
                 minSecondGenScore = score;
@@ -189,4 +186,21 @@ int Player::getLocScore(Move * move)
 
     return score;
 }
+
+/*
+* @brief given a move, finds its heuristic score with a given board
+*
+* @param move - the move you want to get the score of
+* @param customBoard - the board you want to make the move on
+*
+*/
+int Player::getLocScore(Move * move, Board * customBoard)
+{
+    Board * newBoard = customBoard->copy();
+    newBoard->doMove(move, playerSide);
+    int score = newBoard->getBoardScore(playerSide, opponentSide);
+
+    return score;
+}
+
 
