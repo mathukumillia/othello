@@ -221,7 +221,7 @@ int Board::getBoardScore(Side player, Side opponent)
             }
             else if(get(opponent,i,j))
             {
-                score += -1 * boardScores[i][j];
+                score -= boardScores[i][j];
             }
         }
     }
