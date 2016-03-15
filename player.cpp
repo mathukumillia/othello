@@ -202,7 +202,7 @@ int Player::getLocScore(Move * move, Board * customBoard)
     
     if (newBoard->countBlack() + newBoard->countWhite() < 13){
 		score = newBoard->earlyBoardScore(playerSide, opponentSide);
-	}else if (newBoard->countBlack() + newBoard->countWhite() > 54){
+	}else if (newBoard->countBlack() + newBoard->countWhite() > 55){
 		score = newBoard->lateBoardScore(playerSide, opponentSide);
 	}else{
 		score = newBoard->getBoardScore(playerSide, opponentSide);
