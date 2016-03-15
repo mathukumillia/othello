@@ -31,6 +31,8 @@ public:
 
     void setBoard(char data[]);
     int getBoardScore(Side player, Side opponent);
+    int lateBoardScore(Side player, Side opponent);
+    int earlyBoardScore(Side player, Side opponent);
 };
 
 #endif

@@ -75,7 +75,7 @@ Move *Player::doMove(Move *opponentsMove, int msLeft) {
 	if (testingMinimax == true){
 		chosenMove = minimax(possibleMoves);
 	}else{
-		chosenMove = getBestMove(possibleMoves);
+		chosenMove = minimax(possibleMoves);
 	}
     board->doMove(chosenMove, playerSide);
     return chosenMove;
@@ -197,8 +197,16 @@ int Player::getLocScore(Move * move)
 int Player::getLocScore(Move * move, Board * customBoard)
 {
     Board * newBoard = customBoard->copy();
-    newBoard->doMove(move, playerSide);
-    int score = newBoard->getBoardScore(playerSide, opponentSide);
+    newBoard->doMove(move, opponentSide);
+    int score;
+    
+    if (newBoard->countBlack() + newBoard->countWhite() < 13){
+		score = newBoard->earlyBoardScore(playerSide, opponentSide);
+	}else if (newBoard->countBlack() + newBoard->countWhite() > 55){
+		score = newBoard->lateBoardScore(playerSide, opponentSide);
+	}else{
+		score = newBoard->getBoardScore(playerSide, opponentSide);
+	}
 
     return score;
 }

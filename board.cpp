@@ -204,6 +204,46 @@ void Board::setBoard(char data[]) {
     }
 }
 
+int Board::earlyBoardScore(Side player, Side opponent)
+{
+	int score = 0;
+    for(int x = 0;x < 8; x++)
+	{
+		for(int y = 0; y < 8; y++)
+		{
+			Move * current = new Move(x,y);
+			if(this->checkMove(current, player))
+			{
+				score += 1;
+			}else if(this->checkMove(current, opponent))
+			{
+				score -= 1;
+			}
+		}
+	}
+    return score;
+}
+
+int Board::lateBoardScore(Side player, Side opponent)
+{
+    int score = 0;
+    for(int i = 0; i < 8; i++)
+    {
+        for(int j = 0; j < 8; j++)
+        {
+            if(get(player,i,j))
+            {
+                score += 1;
+            }
+            else if(get(opponent,i,j))
+            {
+                score -= 1;
+            }
+        }
+    }
+    return score;
+}
+
 /*
 * @brief gets the heuristic score of the board
 *
@@ -221,7 +261,7 @@ int Board::getBoardScore(Side player, Side opponent)
             }
             else if(get(opponent,i,j))
             {
-               // score -= boardScores[i][j];
+                score -= boardScores[i][j];
             }
         }
     }
